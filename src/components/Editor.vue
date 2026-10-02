@@ -1155,6 +1155,12 @@ defineExpose({
 .editor-content .tiptap li {
   margin: 0.25em 0;
   text-align: left;
+  line-height: var(--editor-line-height, 1.6);
+}
+
+.editor-content .tiptap td,
+.editor-content .tiptap th {
+  line-height: var(--editor-line-height, 1.6);
 }
 
 .editor-content .tiptap li p {

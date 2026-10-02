@@ -196,6 +196,11 @@ export interface Translations {
   codeFont: string;
   codeTheme: string;
   lineHeight: string;
+  lineSpacing: string;
+  lineSpacingCompact: string;
+  lineSpacingStandard: string;
+  lineSpacingRelaxed: string;
+  lineSpacingPreview: string;
   editorPaddingTop: string;
   editorPaddingBottom: string;
   editorPaddingX: string;

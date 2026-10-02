@@ -434,7 +434,7 @@ html[data-variant="minimal"] .ProseMirror,
 html[data-variant="minimal"] .tiptap {
   font-family: var(--editor-font-family, var(--minimal-font-serif));
   font-size: 17px;
-  line-height: 1.75;
+  line-height: var(--editor-line-height, 1.75);
   color: var(--text-primary);
   /* Padding driven by user-tunable CSS vars (Settings → Editor → Padding).
      Defaults defined in useSettings; fallbacks here keep the layout sane

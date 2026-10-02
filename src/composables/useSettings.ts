@@ -21,6 +21,13 @@ export type CodeThemeMode = 'dark' | 'white';
 export type CliKind = 'claude' | 'codex' | 'ollama' | 'openai';
 export type PanelSide = 'left' | 'right';
 
+export const EDITOR_LINE_SPACING_PRESETS = [
+  { id: 'compact', labelKey: 'lineSpacingCompact', lineHeight: 1.4 },
+  // Scale the reference preview's 22px line box at 14px text with the font size.
+  { id: 'standard', labelKey: 'lineSpacingStandard', lineHeight: 22 / 14 },
+  { id: 'relaxed', labelKey: 'lineSpacingRelaxed', lineHeight: 1.8 },
+] as const;
+
 export const OLLAMA_DEFAULT_BASE_URL = 'http://localhost:11434';
 export const OPENAI_DEFAULT_BASE_URL = 'http://localhost:8080';
 export const OLLAMA_DEFAULT_NUM_CTX = 8192;

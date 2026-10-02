@@ -3,7 +3,7 @@ import { onMounted, onUnmounted, ref, computed, watch } from 'vue';
 import { getVersion } from '@tauri-apps/api/app';
 import { open as openExternal } from '@tauri-apps/plugin-shell';
 import { useI18n } from '../i18n';
-import { useSettings, EDITOR_FONTS, CODE_FONTS } from '../composables/useSettings';
+import { useSettings, EDITOR_FONTS, CODE_FONTS, EDITOR_LINE_SPACING_PRESETS } from '../composables/useSettings';
 import { BUILTIN_MERMAID_FORMATS, CUSTOM_FORMAT_ID, type MermaidFormat } from '../utils/mermaid-formats';
 import { useSystemFonts } from '../composables/useSystemFonts';
 import { useLayoutConfig, type LayoutZone } from '../composables/useLayoutConfig';
@@ -618,18 +618,39 @@ onUnmounted(() => {
             </div>
 
             <div class="setting-row">
-              <label class="setting-label">{{ t.lineHeight }}</label>
+              <label id="line-spacing-label" class="setting-label">{{ t.lineSpacing }}</label>
+              <div class="setting-control">
+                <div class="toggle-group" role="group" aria-labelledby="line-spacing-label">
+                  <button
+                    v-for="preset in EDITOR_LINE_SPACING_PRESETS"
+                    :key="preset.id"
+                    type="button"
+                    class="toggle-option"
+                    :class="{ active: settings.editorLineHeight === preset.lineHeight }"
+                    :aria-pressed="settings.editorLineHeight === preset.lineHeight"
+                    @click="setEditorLineHeight(preset.lineHeight)"
+                  >
+                    {{ t[preset.labelKey] }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <label for="editor-line-height" class="setting-label">{{ t.lineHeight }}</label>
               <div class="setting-control inline-control">
                 <input
+                  id="editor-line-height"
                   type="range"
                   min="1.0"
                   max="2.5"
-                  step="0.1"
+                  step="0.01"
                   :value="settings.editorLineHeight"
+                  :aria-valuetext="String(Number(settings.editorLineHeight.toFixed(2)))"
                   @input="(e: Event) => setEditorLineHeight(Number((e.target as HTMLInputElement).value))"
                   class="setting-range"
                 />
-                <span class="range-value">{{ settings.editorLineHeight.toFixed(1) }}</span>
+                <span class="range-value">{{ Number(settings.editorLineHeight.toFixed(2)) }}</span>
               </div>
             </div>
 
@@ -729,6 +750,8 @@ onUnmounted(() => {
             <!-- Font preview -->
             <div class="font-preview" :style="{ fontFamily: `var(--editor-font-family, inherit)`, lineHeight: settings.editorLineHeight }">
               The quick brown fox jumps over the lazy dog. 0123456789
+              <br />
+              {{ t.lineSpacingPreview }}
             </div>
           </div>
 
